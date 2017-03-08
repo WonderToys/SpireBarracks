@@ -2,12 +2,49 @@
 div.heroes
   div.row
     div(v-for="hero in heroes").col.s4.m2.l1
-      div.card
+      div.card(v-on:click="setSelectedHero(hero)", data-target="heroModal")
         div.card-image
           img(:src="'img/avatars/' + hero.avatars.base")
           star-bar(:hero="hero", ascended="false", v-cloak)
           div.shade
           span.card-title {{ hero.name }}
+
+  //- Hero Modal
+  div#heroModal.modal.bottom-sheet
+    div.modal-content
+      h4 {{ selectedHero.name }}
+      div.row
+        div.col.s1
+          img(:src="'img/avatars/' + selectedHero.avatars.base")
+        div.col.s4.offset-s1
+          div.row
+            div.col.s6
+              div
+                span.stat-name HP
+                span.stat {{ selectedHero.baseStats.hp }}
+              div
+                span.stat-name Power
+                span.stat {{ selectedHero.baseStats.power }}
+              div
+                span.stat-name Armor
+                span.stat {{ selectedHero.baseStats.armor }}
+              div
+                span.stat-name Speed
+                span.stat {{ selectedHero.baseStats.speed }}
+
+            div.col.s6
+              div
+                span.stat-name Crit
+                span.stat {{ selectedHero.baseStats.crit }}%
+              div
+                span.stat-name Crit Mult
+                span.stat {{ selectedHero.baseStats.critMult }}%
+              div
+                span.stat-name Aim
+                span.stat {{ selectedHero.baseStats.aim }}%
+              div
+                span.stat-name Block
+                span.stat {{ selectedHero.baseStats.block }}%
 </template>
 
 <style lang="less" scoped>
@@ -47,7 +84,24 @@ div.heroes
       }
     }
   }
-}
+} //- card
+
+#heroModal {
+  .row {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    
+    img {
+      width: 100%;
+    }
+
+    .stat-name {
+      font-weight: bold;
+      margin-right: 1rem;
+      width: 40%
+    }
+  }
+} //- #heroModal
 </style>
 
 <script>
@@ -59,6 +113,11 @@ export default {
   components: {
     StarBar
   },
+  methods: {
+    setSelectedHero(hero) {
+      this.selectedHero = hero;
+    }
+  },
   meteor: {
     heroes() {
       return Heroes.find({}, {
@@ -68,6 +127,17 @@ export default {
         }
       });
     }
+  },
+  data() {
+    return { 
+      selectedHero: {
+        avatars: {},
+        baseStats: {}
+      } 
+    };
+  },
+  updated() {
+    $('.modal').modal();
   }
 };
 </script>
