@@ -1,7 +1,7 @@
 <template lang="jade">
 div.heroes
   div.row
-    div(v-for="hero in heroes").col.s4.m1
+    div(v-for="hero in heroes").col.s4.m2.l1
       div.card
         div.card-image
           img(:src="'img/avatars/' + hero.avatars.base")
