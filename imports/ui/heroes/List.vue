@@ -20,7 +20,8 @@ div.heroes
       div.card(v-on:click="setSelectedHero(hero)", data-target="heroModal", :class="{ 'z-depth-5': selectedHero == hero }")
         div.card-image
           img(:src="'img/avatars/' + getHeroAvatar(hero)")
-          star-bar(:hero="hero", :ascended="showAscended", v-cloak)
+          div.star-bar
+            img.stars(:src="'img/stars/' + getStarImage(hero)")
           div.shade
           span.card-title {{ hero.name }}
 
@@ -32,7 +33,7 @@ div.heroes
         span.small.grey-text.darken-2 {{ selectedHero.className }}
       div.row
         div.col.s1
-          img(:src="'img/avatars/' + selectedHero.avatars.base")
+          img(:src="'img/avatars/' + getHeroAvatar(selectedHero)")
         div.col.s4.offset-s1
           div.row
             div.col.s6
@@ -62,6 +63,9 @@ div.heroes
               div
                 span.stat-name Block
                 span.stat {{ selectedHero.baseStats.block }}%
+      //- Row
+      div.element
+        img(:src="'img/' + getElementImage(selectedHero)")
 </template>
 
 <style lang="less" scoped>
@@ -96,11 +100,6 @@ nav {
       text-shadow: 1px 1px 2px #000000;
       display: none;
     }
-
-    .star-bar {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-    }
   }
 
   &:hover, &.z-depth-5 {
@@ -134,7 +133,7 @@ nav {
     margin-right: -0.75rem;
 
     img {
-      width: 100%;
+      width: auto;
     }
 
     .stat-name {
@@ -144,7 +143,33 @@ nav {
       display: inline-block;
     }
   }
+
+  .element {
+    position: absolute;
+    top: -28px;
+    right: -28px;
+    opacity: 0.25;
+
+    img {
+      width: 128px;
+      height: auto;
+    }
+  }
 } //- #heroModal
+
+.star-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  text-align: center;
+
+  img {
+    height: 1.6rem;
+    width: auto;
+    border-radius: 0px;
+    display: inline;
+    vertical-align: bottom;
+  }
+}
 </style>
 
 <script>
@@ -153,17 +178,27 @@ import { Heroes } from '/imports/api/heroes/heroes';
 
 Session.setDefault('hearoSearchText', '');
 
-import StarBar from '/imports/ui/components/StarBar.vue';
-
 export default {
-  components: {
-    StarBar
-  },
   methods: {
     searchButtonTitle() {
       if ( this.showAscended == true ) return 'Show Base';
 
       return 'Show Ascended';
+    },
+    getElementImage(hero) {
+      return `${ hero.element.toLowerCase() }.png`;
+    },
+    getStarImage(hero) {
+      let baseImage = `${ hero.naturalStars }star`;
+      if ( hero.canAscend !== true ) {
+        return `${ baseImage }_food.png`;
+      }
+
+      if ( this.showAscended === true ) {
+        return `${ baseImage }_awakened.png`;
+      }
+
+      return `${ baseImage }.png`;
     },
     getHeroAvatar(hero) {
       if ( hero.canAscend !== true ) {
