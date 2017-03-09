@@ -29,7 +29,7 @@ div.heroes
   div#heroModal.modal.bottom-sheet
     div.modal-content(v-if="selectedHero != null")
       h4 
-        | {{ selectedHero.name }}
+        | {{ getHeroName(selectedHero) }}
         span.small.grey-text.darken-2 {{ selectedHero.className }}
       div.row
         div.col.s1
@@ -39,30 +39,38 @@ div.heroes
             div.col.s6
               div
                 span.stat-name HP
-                span.stat {{ selectedHero.baseStats.hp }}
+                span.stat {{ getHeroStat(selectedHero, 'hp') }}
               div
                 span.stat-name Power
-                span.stat {{ selectedHero.baseStats.power }}
+                span.stat {{ getHeroStat(selectedHero, 'power') }}
               div
                 span.stat-name Armor
-                span.stat {{ selectedHero.baseStats.armor }}
+                span.stat {{ getHeroStat(selectedHero, 'armor') }}
               div
                 span.stat-name Speed
-                span.stat {{ selectedHero.baseStats.speed }}
+                span.stat {{ getHeroStat(selectedHero, 'speed') }}
 
             div.col.s6
               div
                 span.stat-name Crit
-                span.stat {{ selectedHero.baseStats.crit }}%
+                span.stat {{ getHeroStat(selectedHero, 'crit') }}%
               div
                 span.stat-name Crit Mult
-                span.stat {{ selectedHero.baseStats.critMult }}%
+                span.stat {{ getHeroStat(selectedHero, 'critMult') }}%
               div
                 span.stat-name Aim
-                span.stat {{ selectedHero.baseStats.aim }}%
+                span.stat {{ getHeroStat(selectedHero, 'aim') }}%
               div
                 span.stat-name Block
-                span.stat {{ selectedHero.baseStats.block }}%
+                span.stat {{ getHeroStat(selectedHero, 'block') }}%
+
+          div.row
+            div.col.s6
+              a(href="#", style="width: 100%; text-align: center").btn.waves-effect.waves-light.deep-purple.darken-1.disabled
+                | Show Max
+            div.col.s6
+              a(href="#", v-on:click="toggleAscended()", style="width: 100%; text-align: center").btn.waves-effect.waves-light.deep-purple.darken-1 
+                | {{ searchButtonTitle() }}
       //- Row
       div.element
         img(:src="'img/' + getElementImage(selectedHero)")
@@ -200,6 +208,17 @@ export default {
 
       return `${ baseImage }.png`;
     },
+    getHeroName(hero) {
+      if ( hero.canAscend !== true ) {
+        return hero.name;
+      }
+
+      if ( this.showAscended === true ) {
+        return hero.ascendedName;
+      }
+
+      return hero.name;
+    },
     getHeroAvatar(hero) {
       if ( hero.canAscend !== true ) {
         return hero.avatars.base;
@@ -210,6 +229,13 @@ export default {
       }
 
       return hero.avatars.base;
+    },
+    getHeroStat(hero, stat) {
+      if ( this.showAscended === true ) {
+        return hero.baseStats.ascended[stat].toLocaleString();
+      }
+
+      return hero.baseStats.base[stat].toLocaleString();
     },
     setSelectedHero(hero) {
       this.selectedHero = hero;
