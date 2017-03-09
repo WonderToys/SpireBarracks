@@ -71,6 +71,36 @@ div.heroes
             div.col.s6
               a(href="#", v-on:click="toggleAscended()", style="width: 100%; text-align: center").btn.waves-effect.waves-light.deep-purple.darken-1 
                 | {{ searchButtonTitle() }}
+        //- Hero Stats
+
+        div.col.s6
+          div.row.hero-skills
+            div.col.s6(v-if="getHeroSkills(selectedHero)[0] != null")
+              h6 
+                | {{ getHeroSkills(selectedHero)[0].name }}
+                span.small.grey-text.darken-2 {{ getHeroSkills(selectedHero)[0].coolString }}
+
+              p {{ getHeroSkills(selectedHero)[0].description }}
+            div.col.s6(v-if="getHeroSkills(selectedHero)[1] != null")
+              h6 
+                | {{ getHeroSkills(selectedHero)[1].name }}
+                span.small.grey-text.darken-2 {{ getHeroSkills(selectedHero)[1].coolString }}
+
+              p {{ getHeroSkills(selectedHero)[1].description }}
+          div.row.hero-skills(v-if="getHeroSkills(selectedHero).length > 2")
+            div.col.s6(v-if="getHeroSkills(selectedHero)[2] != null")
+              h6 
+                | {{ getHeroSkills(selectedHero)[2].name }}
+                span.small.grey-text.darken-2 {{ getHeroSkills(selectedHero)[2].coolString }}
+
+              p {{ getHeroSkills(selectedHero)[2].description }}
+            div.col.s6(v-if="getHeroSkills(selectedHero)[3] != null")
+              h6 
+                | {{ getHeroSkills(selectedHero)[3].name }}
+                span.small.grey-text.darken-2 {{ getHeroSkills(selectedHero)[3].coolString }}
+
+              p {{ getHeroSkills(selectedHero)[3].description }}
+
       //- Row
       div.element
         img(:src="'img/' + getElementImage(selectedHero)")
@@ -124,7 +154,7 @@ nav {
 } //- card
 
 #heroModal {
-  h4, span {
+  h4, h6, span {
     color: #212121;
   }
 
@@ -149,6 +179,23 @@ nav {
       margin-right: 1rem;
       width: 40%;
       display: inline-block;
+    }
+
+    .hero-skills {
+      p {
+        margin-top: 0;
+      }
+
+      h6 {
+        font-weight: bold;
+        margin-top: 0;
+
+        span.small {
+          font-size: 0.8rem;
+          margin-left: 1rem;
+          vertical-align: middle;
+        }
+      }
     }
   }
 
@@ -236,6 +283,27 @@ export default {
       }
 
       return hero.baseStats.base[stat].toLocaleString();
+    },
+    getHeroSkills(hero) {
+      let skills = hero.skills.base;
+      if ( hero.canAscend === true && this.showAscended === true ) {
+        skills = hero.skills.ascended;
+      }
+
+      skills.forEach(s => {
+        if ( s.isPassive === true ) {
+          s.coolString = 'Passive';
+        }
+        else if ( s.cooldown != '' ) {
+          s.coolString = `${ s.cooldown } Turns`;
+
+          if ( s.cooldownInitial != '' ) {
+            s.coolString += `, ${ s.cooldownInitial } Inintial`;
+          }
+        }
+      });
+
+      return skills;
     },
     setSelectedHero(hero) {
       this.selectedHero = hero;
