@@ -1,11 +1,11 @@
 <template lang="jade">
 div.star-bar
-  img(src="img/star.png", :class="starClass(1)")
-  img(src="img/star.png", v-if="hero.naturalStars >= 2", :class="starClass(2)")
-  img(src="img/star.png", v-if="hero.naturalStars >= 3", :class="starClass(3)")
-  img(src="img/star.png", v-if="hero.naturalStars >= 4", :class="starClass(4)")
-  img(src="img/star.png", v-if="hero.naturalStars >= 5", :class="starClass(5)")
-  img(src="img/star.png", v-if="hero.naturalStars >= 6", :class="starClass(6)")
+  img(:src="'img/' + starImage() + '.png'", :class="starClass(1)")
+  img(:src="'img/' + starImage() + '.png'", v-if="hero.naturalStars >= 2", :class="starClass(2)")
+  img(:src="'img/' + starImage() + '.png'", v-if="hero.naturalStars >= 3", :class="starClass(3)")
+  img(:src="'img/' + starImage() + '.png'", v-if="hero.naturalStars >= 4", :class="starClass(4)")
+  img(:src="'img/' + starImage() + '.png'", v-if="hero.naturalStars >= 5", :class="starClass(5)")
+  img(:src="'img/' + starImage() + '.png'", v-if="hero.naturalStars >= 6", :class="starClass(6)")
 </template>
 
 <style lang="less" scoped>
@@ -40,6 +40,17 @@ div.star-bar
 export default {
   props: [ 'hero', 'ascended' ],
   methods: {
+    starImage() {
+      if ( this.hero.canAscend !== true ) {
+        return 'star_food';
+      }
+
+      if ( this.ascended === true ) {
+        return 'star_ascended';
+      }
+
+      return 'star'
+    },
     starClass(starPlace) {
       switch ( this.hero.naturalStars ) {
         case 5: {
