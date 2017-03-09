@@ -32,9 +32,9 @@ div.heroes
         | {{ getHeroName(selectedHero) }}
         span.small.grey-text.darken-2 {{ selectedHero.className }}
       div.row
-        div.col.s1
+        div.col.s2
           img(:src="'img/avatars/' + getHeroAvatar(selectedHero)")
-        div.col.s4.offset-s1
+        div.col.s4
           div.row
             div.col.s6
               div
@@ -171,7 +171,7 @@ nav {
     margin-right: -0.75rem;
 
     img {
-      width: auto;
+      width: 100%;
     }
 
     .stat-name {
