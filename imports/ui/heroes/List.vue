@@ -20,13 +20,13 @@ div.heroes
     div(v-for="(hero, index) in heroes", v-cloak).col.s4.m2.l1
       div.card(v-on:click="setSelectedHero(hero, index)", data-target="heroModal", :class="{ 'z-depth-5': selectedHero == hero }")
         div.card-image
-          img(:src="'img/avatars/' + hero.avatars.base", v-if="hero.canAscend === false")
-          img(:src="'img/avatars/' + hero.avatars.base", v-show="showAscended === false", v-if="hero.canAscend === true")
-          img(:src="'img/avatars/' + hero.avatars.ascended", v-show="showAscended === true", v-if="hero.canAscend === true")
+          img(v-lazy="'img/avatars/' + hero.avatars.base", v-if="hero.canAscend === false")
+          img(v-lazy="'img/avatars/' + hero.avatars.base", v-show="showAscended === false", v-if="hero.canAscend === true")
+          img(v-lazy="'img/avatars/' + hero.avatars.ascended", v-show="showAscended === true", v-if="hero.canAscend === true")
           div.star-bar
-            img.stars(:src="'img/stars/' + hero.naturalStars + 'star_food.png'", v-if="hero.canAscend === false")
-            img.stars(:src="'img/stars/' + hero.naturalStars + 'star.png'", v-show="showAscended === false", v-if="hero.canAscend === true")
-            img.stars(:src="'img/stars/' + hero.naturalStars + 'star_awakened.png'", v-show="showAscended === true", v-if="hero.canAscend === true")
+            img.stars(v-lazy="getStarsLazyConfig(hero)", v-if="hero.canAscend === false")
+            img.stars(v-lazy="getStarsLazyConfig(hero)", v-show="showAscended === false", v-if="hero.canAscend === true")
+            img.stars(v-lazy="getStarsLazyConfig(hero)", v-show="showAscended === true", v-if="hero.canAscend === true")
           div.shade
           div.view-container
             i.material-icons search
@@ -184,6 +184,9 @@ nav {
 } //- card
 
 #heroModal {
+  height: 45%;
+  overflow-x: hidden;
+
   h4, h6, span {
     color: #212121;
   }
@@ -254,7 +257,11 @@ nav {
         }
       }
     }
-  }
+
+    &:first-child {
+      margin-bottom: 0;
+    }
+  } //- row
 
   .element {
     position: absolute;
@@ -300,6 +307,24 @@ export default {
       if ( this.showAscended == true ) return 'Show Base';
 
       return 'Show Ascended';
+    },
+    getStarsLazyConfig(hero) {
+      let src = `img/stars/${ hero.naturalStars }star`;
+
+      if ( hero.canAscend === false ) {
+        src += '_food';
+      }
+
+      if ( hero.canAscend === true ) {
+        if ( this.showAscended === true ) {
+          src += '_awakened';
+        }
+      }
+
+      return {
+        loading: '',
+        src: `${ src }.png`
+      }
     },
     getElementImage(hero) {
       return `${ hero.element.toLowerCase() }.png`;
