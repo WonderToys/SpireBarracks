@@ -1,4 +1,4 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 import Vue from 'vue';
 
 import VueLazyload from '/imports/vendor/vue-lazyload'
@@ -9,10 +9,15 @@ import AppLayout from '/imports/ui/AppLayout.vue';
 // Load
 Meteor.startup(() => {
   Vue.use(VueLazyload, {
-    loading: 'img/avatars/empty.png'
-  })
+    loading: 'img/avatars/empty.png',
+    adapter: {
+      loaded({ el }, fromCache) {
+        $(el).removeAttr('lazy');
+      }
+    }
+  });
 
-  new Vue({
+  const vm = new Vue({
     router: router.start(),
     render: h => h(AppLayout),
   }).$mount('app');

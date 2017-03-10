@@ -22,11 +22,11 @@ div.heroes
         div.card-image
           img(v-lazy="'img/avatars/' + hero.avatars.base", v-if="hero.canAscend === false")
           img(v-lazy="'img/avatars/' + hero.avatars.base", v-show="showAscended === false", v-if="hero.canAscend === true")
-          img(v-lazy="'img/avatars/' + hero.avatars.ascended", v-show="showAscended === true", v-if="hero.canAscend === true")
+          img(:src="'img/avatars/' + hero.avatars.ascended", v-show="showAscended === true", v-if="hero.canAscend === true")
           div.star-bar
             img.stars(v-lazy="getStarsLazyConfig(hero)", v-if="hero.canAscend === false")
             img.stars(v-lazy="getStarsLazyConfig(hero)", v-show="showAscended === false", v-if="hero.canAscend === true")
-            img.stars(v-lazy="getStarsLazyConfig(hero)", v-show="showAscended === true", v-if="hero.canAscend === true")
+            img.stars(:src="'img/stars/' + hero.naturalStars + 'star_awakened.png'", v-show="showAscended === true", v-if="hero.canAscend === true")
           div.shade
           div.view-container
             i.material-icons search
