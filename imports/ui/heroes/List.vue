@@ -1,3 +1,6 @@
+<!--
+  Template
+-->
 <template lang="jade">
 div.heroes
   //- Search Bar
@@ -13,7 +16,7 @@ div.heroes
                 i.material-icons search
               i.material-icons close
           div.col.m12.l2
-            a(href="javascript:void(0);", v-on:click="toggleAscended()", style="width: 100%; text-align: center;").btn-flat.waves-effect.waves-orange {{ searchButtonTitle() }}
+            a(href="javascript:void(0);", v-on:click="showAscended = !showAscended", style="width: 100%; text-align: center;").btn-flat.waves-effect.waves-orange {{ searchButtonTitle() }}
 
   //- Hero Card
   div.row
@@ -34,92 +37,38 @@ div.heroes
   //- Hero Modal
   div#heroModal.modal.bottom-sheet
     div.modal-content(v-if="selectedHero != null")
-      h4 
-        | {{ getHeroName(selectedHero) }}
-        span.small.grey-text.darken-2 {{ selectedHero.className }}
+      div.hero-title
+        h4 
+          | {{ getHeroName(selectedHero) }}
+          span.small.grey-text.darken-2 {{ selectedHero.className }} ({{ selectedHero.heroType[0].toUpperCase() + selectedHero.heroType.substring(1).toLowerCase() }})
+        div.view-toggle
+          a(href="javascript:void(0);", v-if="showRatings === true", v-on:click="showRatings = !showRatings") Hero Info
+          span.showing(v-if="showRatings === false") Hero Info
+          span.separator |
+          a(href="javascript:void(0);", v-if="showRatings === false", v-on:click="showRatings = !showRatings") Hero Ratings
+          span.showing(v-if="showRatings === true") Hero Ratings
       div.row
         div.col.s2
           div.avatar-container
             img(:src="'img/avatars/' + selectedHero.avatars.base", v-if="selectedHero.canAscend === false")
             img(:src="'img/avatars/' + selectedHero.avatars.base", v-show="showAscended === false", v-if="selectedHero.canAscend === true")
             img(:src="'img/avatars/' + selectedHero.avatars.ascended", v-show="showAscended === true", v-if="selectedHero.canAscend === true")
-            a(href="javascript:void(0);", :class="{ disabled: selectedIndex <= 0 }", v-on:click="previousHero()").nav.previous.btn.white.waves-effect.waves-orange
+            a(href="javascript:void(0);", :class="{ disabled: selectedIndex <= 0 }", v-on:click="previousHero()").nav.previous.btn.white.waves-effect.waves-orange.hide-on-med-and-down
               i.material-icons chevron_left
-            a(href="javascript:void(0);", :class="{ disabled: selectedIndex >= heroes.length - 1 }", v-on:click="nextHero()").nav.next.btn.white.waves-effect.waves-orange
+            a(href="javascript:void(0);", :class="{ disabled: selectedIndex >= heroes.length - 1 }", v-on:click="nextHero()").nav.next.btn.white.waves-effect.waves-orange.hide-on-med-and-down
               i.material-icons chevron_right
 
-        div.col.s4
-          div.row
-            div.col.s6
-              div
-                span.stat-name HP
-                span.stat {{ getHeroStat(selectedHero, 'hp') }}
-              div
-                span.stat-name Power
-                span.stat {{ getHeroStat(selectedHero, 'power') }}
-              div
-                span.stat-name Armor
-                span.stat {{ getHeroStat(selectedHero, 'armor') }}
-              div
-                span.stat-name Speed
-                span.stat {{ getHeroStat(selectedHero, 'speed') }}
-
-            div.col.s6
-              div
-                span.stat-name Crit
-                span.stat {{ getHeroStat(selectedHero, 'crit') }}%
-              div
-                span.stat-name Crit Mult
-                span.stat {{ getHeroStat(selectedHero, 'critMult') }}%
-              div
-                span.stat-name Aim
-                span.stat {{ getHeroStat(selectedHero, 'aim') }}%
-              div
-                span.stat-name Block
-                span.stat {{ getHeroStat(selectedHero, 'block') }}%
-
-          div.row.toggle-container
-            div.col.s6
-              a(href="javascript:void(0);").btn.waves-effect.waves-light.deep-purple.darken-1.disabled
-                | Show Max
-            div.col.s6
-              a(href="javascript:void(0);", v-on:click="toggleAscended()").btn.waves-effect.waves-light.deep-purple.darken-1 
-                | {{ searchButtonTitle() }}
-        //- Hero Stats
-
-        div.col.s6
-          div.row.hero-skills
-            div.col.s6(v-if="getHeroSkills(selectedHero)[0] != null")
-              h6 
-                | {{ getHeroSkills(selectedHero)[0].name }}
-                span.small.grey-text.darken-2 {{ getHeroSkills(selectedHero)[0].coolString }}
-
-              p {{ getHeroSkills(selectedHero)[0].description }}
-            div.col.s6(v-if="getHeroSkills(selectedHero)[1] != null")
-              h6 
-                | {{ getHeroSkills(selectedHero)[1].name }}
-                span.small.grey-text.darken-2 {{ getHeroSkills(selectedHero)[1].coolString }}
-
-              p {{ getHeroSkills(selectedHero)[1].description }}
-          div.row.hero-skills(v-if="getHeroSkills(selectedHero).length > 2")
-            div.col.s6(v-if="getHeroSkills(selectedHero)[2] != null")
-              h6 
-                | {{ getHeroSkills(selectedHero)[2].name }}
-                span.small.grey-text.darken-2 {{ getHeroSkills(selectedHero)[2].coolString }}
-
-              p {{ getHeroSkills(selectedHero)[2].description }}
-            div.col.s6(v-if="getHeroSkills(selectedHero)[3] != null")
-              h6 
-                | {{ getHeroSkills(selectedHero)[3].name }}
-                span.small.grey-text.darken-2 {{ getHeroSkills(selectedHero)[3].coolString }}
-
-              p {{ getHeroSkills(selectedHero)[3].description }}
+        list-hero-info(:hero="selectedHero", :ascended="showAscended", v-if="showRatings === false")
+        list-hero-ratings(:hero="selectedHero", v-if="showRatings === true")
 
       //- Row
       div.element
         img(:src="'img/' + getElementImage(selectedHero)")
 </template>
 
+<!--
+  Style
+-->
 <style lang="less" scoped>
 nav {
   .input-field {
@@ -191,11 +140,30 @@ nav {
     color: #212121;
   }
 
-  h4 {
-    span.small {
-      margin-left: 1rem;
-      font-size: 1.54rem;
-      vertical-align: middle;
+  .hero-title {
+    h4 {
+      display: inline-block;
+
+      span.small {
+        margin-left: 1rem;
+        font-size: 1.54rem;
+        vertical-align: middle;
+      }
+    }
+
+    .view-toggle {
+      float: right;
+      margin-right: 100px;
+      height: 100%;
+      display: inline-block;
+      margin-top: 0.64rem;
+
+      .separator {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        color: #dddddd;
+        font-weight: bold;
+      }
     }
   }
 
@@ -223,37 +191,6 @@ nav {
 
         &.next {
           right: 0.3rem;
-        }
-      }
-    }
-
-    .toggle-container {
-      .btn {
-        width: 100%;
-        text-align: center;
-      }
-    }
-
-    .stat-name {
-      font-weight: bold;
-      margin-right: 1rem;
-      width: 40%;
-      display: inline-block;
-    }
-
-    .hero-skills {
-      p {
-        margin-top: 0;
-      }
-
-      h6 {
-        font-weight: bold;
-        margin-top: 0;
-
-        span.small {
-          font-size: 0.8rem;
-          margin-left: 1rem;
-          vertical-align: middle;
         }
       }
     }
@@ -295,13 +232,29 @@ nav {
 }
 </style>
 
+<!--
+  Script
+-->
 <script>
 import { Session } from 'meteor/session';
 import { Heroes } from '/imports/api/heroes/heroes';
 
+import ListHeroInfo from '/imports/ui/heroes/components/ListHeroInfo.vue';
+import ListHeroRatings from '/imports/ui/heroes/components/ListHeroRatings.vue';
+
 Session.setDefault('hearoSearchText', '');
 
 export default {
+  components: { ListHeroInfo, ListHeroRatings },
+  data() {
+    return { 
+      selectedHero: null,
+      selectedIndex: -1,
+      showAscended: false,
+      showRatings: false,
+      searchText: '',
+    };
+  },
   methods: {
     searchButtonTitle() {
       if ( this.showAscended == true ) return 'Show Base';
@@ -340,40 +293,9 @@ export default {
 
       return hero.name;
     },
-    getHeroStat(hero, stat) {
-      if ( this.showAscended === true ) {
-        return hero.baseStats.ascended[stat].toLocaleString();
-      }
-
-      return hero.baseStats.base[stat].toLocaleString();
-    },
-    getHeroSkills(hero) {
-      let skills = hero.skills.base;
-      if ( hero.canAscend === true && this.showAscended === true ) {
-        skills = hero.skills.ascended;
-      }
-
-      skills.forEach(s => {
-        if ( s.isPassive === true ) {
-          s.coolString = 'Passive';
-        }
-        else if ( s.cooldown != '' ) {
-          s.coolString = `${ s.cooldown } Turns`;
-
-          if ( s.cooldownInitial != '' ) {
-            s.coolString += `, ${ s.cooldownInitial } Inintial`;
-          }
-        }
-      });
-
-      return skills;
-    },
     setSelectedHero(hero, index) {
       this.selectedHero = hero;
       this.selectedIndex = index;
-    },
-    toggleAscended() {
-      this.showAscended = !this.showAscended;
     },
     previousHero() {
       this.selectedIndex--;
@@ -408,14 +330,6 @@ export default {
         }
       }
     }
-  },
-  data() {
-    return { 
-      selectedHero: null,
-      selectedIndex: -1,
-      showAscended: false,
-      searchText: '',
-    };
   },
   mounted() {
     const that = this;
