@@ -317,14 +317,20 @@ export default {
         },
         update({ searchText }) {
           return Heroes.find({
-            $or: [
-              { name: { $regex: searchText, $options: "ig" } },
-              { className: { $regex: searchText, $options: "ig" } }
+            $and: [
+              {
+                $or: [
+                  { name: { $regex: searchText, $options: "ig" } },
+                  { className: { $regex: searchText, $options: "ig" } }
+                ]
+              },
+              { naturalStars: { $gt: 2 } }
             ]
           }, {
             sort: {
               elementSort: 1,
-              naturalStars: 1
+              naturalStars: 1,
+              className: 1
             }
           });
         }
