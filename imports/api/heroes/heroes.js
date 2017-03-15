@@ -58,6 +58,10 @@ const getHeroStats = (hero, base) => {
 // Export
 export const Heroes = new Mongo.Collection('heroes', {
   transform(doc) {
+    if ( doc.ratings == null ) {
+      doc.ratings = {};
+    }
+    
     doc.baseStats = {
       base: getHeroStats(doc, true),
       ascended: getHeroStats(doc, false),

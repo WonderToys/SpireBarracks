@@ -41,7 +41,7 @@ div.heroes
         h4 
           | {{ getHeroName(selectedHero) }}
           span.small.grey-text.darken-2 {{ selectedHero.className }} ({{ selectedHero.heroType[0].toUpperCase() + selectedHero.heroType.substring(1).toLowerCase() }})
-        div.view-toggle
+        div.view-toggle(v-show="false")
           a(href="javascript:void(0);", v-if="showRatings === true", v-on:click="showRatings = !showRatings") Hero Info
           span.showing(v-if="showRatings === false") Hero Info
           span.separator |

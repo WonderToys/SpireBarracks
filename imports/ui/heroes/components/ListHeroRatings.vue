@@ -8,7 +8,7 @@ div.col.s10
       h5 {{ cat }}
       div.valign-wrapper.rating-container(v-for="(title, key) in items")
         span.label.valign {{ title }}
-        star-rating(:disabled="user == null", :rating="getRating(key)")
+        star-rating(:disabled="user == null", v-model="hero.ratings[key]")
 
     div.col.s4
       h5 Equipment
@@ -38,6 +38,7 @@ h5 {
 -->
 <script>
 import { Meteor } from 'meteor/meteor';
+import { Heroes } from '/imports/api/heroes/heroes';
 
 import StarRating from '/imports/ui/components/StarRating.vue';
 
@@ -48,12 +49,6 @@ export default {
     return { 
       ratingConfig: {}
     };
-  },
-  methods: {
-    getRating(rating) {
-      const ratings = this.hero.ratings || {};
-      return ratings[rating] || 0;
-    }
   },
   meteor: {
     data: {

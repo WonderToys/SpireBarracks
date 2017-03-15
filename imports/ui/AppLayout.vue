@@ -5,6 +5,12 @@ div.app-layout
     router-view
 </template>
 
+<style>
+.material-tooltip {
+  text-align: left;
+}
+</style>
+
 <script>
 import AppMenu from '/imports/ui/AppMenu.vue';
 
