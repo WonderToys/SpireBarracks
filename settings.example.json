@@ -2,5 +2,9 @@
 	"google": {
 		"clientId": "YOUR CLIENT ID",
 		"clientSecret": "YOUR SECRET"
+	},
+	"facebook": {
+		"appId": "YOUR APP ID",
+		"secret": "YOUR SECRET"
 	}
 }

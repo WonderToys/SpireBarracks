@@ -349,6 +349,7 @@ export default {
     $('.modal').modal({
       complete() {
         that.selectedHero = null;
+        that.showRatings = false;
       }
     });
   }

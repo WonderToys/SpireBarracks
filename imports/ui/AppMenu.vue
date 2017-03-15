@@ -32,13 +32,9 @@ div.app-navigation
                   i.material-icons.zmdi.zmdi-google
                   | Google
               li
-                a(href="javascript:void(0);", style="color: #3B5998;")
+                a(href="javascript:void(0);", style="color: #3B5998;", v-on:click="loginWithFacebook()")
                   i.material-icons.zmdi.zmdi-facebook
                   | Facebook
-              li
-                a(href="javascript:void(0);", style="color: #1DA1F2;")
-                  i.material-icons.zmdi.zmdi-twitter
-                  | Twitter
 
   //- Alliance Name Modal
   div#allianceNameModal.modal
@@ -137,6 +133,9 @@ export default {
     },
     loginWithGoogle() {
       Meteor.loginWithGoogle(this._handleLogin)
+    },
+    loginWithFacebook() {
+      Meteor.loginWithFacebook(this._handleLogin);
     }
   },
   meteor: {

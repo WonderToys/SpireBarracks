@@ -1,12 +1,23 @@
 import { Meteor } from 'meteor/meteor';
 
-// ServiceConfiguration
+// Service Configurations
 ServiceConfiguration.configurations.upsert({
     service: "google"
   }, {
     $set: {
       clientId: Meteor.settings.google.clientId,
       secret: Meteor.settings.google.clientSecret,
+      loginStyle: "popup"
+    }
+  }
+);
+
+ServiceConfiguration.configurations.upsert({
+    service: "facebook"
+  }, {
+    $set: {
+      appId: Meteor.settings.facebook.appId,
+      secret: Meteor.settings.facebook.secret,
       loginStyle: "popup"
     }
   }
