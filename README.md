@@ -1,5 +1,6 @@
 You need [meteor](https://www.meteor.com/) installed. 
 
 ```
-meteor --settings settings.json
+$ meteor npm install 
+$ meteor --settings settings.json 
 ```
