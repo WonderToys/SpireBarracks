@@ -4,40 +4,12 @@
 <template lang="jade">
 div.col.s10
   div.row
-    div.col.s4
-      h5 Content
-      div.valign-wrapper.rating-container
-        span.label.valign Early Game
-        star-rating
-      div.valign-wrapper.rating-container
-        span.label.valign Scenarios
-        star-rating
-      div.valign-wrapper.rating-container
-        span.label.valign Temples
-        star-rating
-      div.valign-wrapper.rating-container
-        span.label.valign Arena
-        star-rating
-    div.col.s4
-      h5 Dungeons
-      div.valign-wrapper.rating-container
-        span.label.valign Ironclaw
-        star-rating
-      div.valign-wrapper.rating-container
-        span.label.valign Swiftsteel
-        star-rating
-      div.valign-wrapper.rating-container
-        span.label.valign Lifesilk
-        star-rating
-      div.valign-wrapper.rating-container
-        span.label.valign Wartech
-        star-rating
-      div.valign-wrapper.rating-container
-        span.label.valign Witchstone
-        star-rating
-      div.valign-wrapper.rating-container
-        span.label.valign Titanguard
-        star-rating
+    div.col.s4(v-for="(items, cat) in ratingConfig")
+      h5 {{ cat }}
+      div.valign-wrapper.rating-container(v-for="(title, key) in items")
+        span.label.valign {{ title }}
+        star-rating(:disabled="user == null", :rating="getRating(key)")
+
     div.col.s4
       h5 Equipment
       div.valign-wrapper.rating-container
@@ -65,9 +37,35 @@ h5 {
   Script
 -->
 <script>
+import { Meteor } from 'meteor/meteor';
+
 import StarRating from '/imports/ui/components/StarRating.vue';
 
 export default {
-  components: { StarRating }
+  components: { StarRating },
+  props: [ 'hero' ],
+  data() {
+    return { 
+      ratingConfig: {}
+    };
+  },
+  methods: {
+    getRating(rating) {
+      const ratings = this.hero.ratings || {};
+      return ratings[rating] || 0;
+    }
+  },
+  meteor: {
+    data: {
+      user() {
+        return Meteor.user();
+      }
+    }
+  },
+  created() {
+    Meteor.call('getRatingConfig', (err, types) => {
+      this.ratingConfig = types;
+    });
+  }
 };
 </script>

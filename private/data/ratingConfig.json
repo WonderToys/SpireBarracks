@@ -1,0 +1,16 @@
+{
+	"Content": {
+		"early_game": "Early Game",
+		"scenarios": "Scenarios",
+		"temples": "Temples",
+		"arena": "Arena"
+	},
+	"Dungeons": {
+		"ironclaw": "Ironclaw",
+		"swiftsteel": "Swiftsteel",
+		"lifesilk": "Lifesilk",
+		"wartech": "Wartech",
+		"witchstone": "Witchstone",
+		"titanguard": "Titanguard"
+	}
+}

@@ -3,8 +3,9 @@
 -->
 <template lang="jade">
 div.star-rating
-  span.star.material-icons(v-for="star in stars", :data-value="star", :class="{ 'orange-text': star <= rating && rating != null }",
-                           v-on:mouseover="mouseOver(star)", v-on:mouseout="mouseOut(star)") {{ getStar(star) }}
+  span.star.material-icons(v-for="star in stars", :data-value="star", v-on:mouseover="mouseOver(star)", v-on:mouseout="mouseOut(star)",
+                           :class="{ 'orange-text': star <= rating && rating != null, 'disabled': disabled }") 
+    | {{ getStar(star) }}
 </template>
 
 <!--
@@ -18,6 +19,10 @@ div.star-rating
     cursor: pointer;
     color: #636363;
     font-size: 1.5rem;
+
+    &.disabled {
+      cursor: default;
+    }
   }
 }
 </style>
@@ -27,11 +32,19 @@ div.star-rating
 -->
 <script>
 export default {
+  props: {
+    disabled: {
+      type: Boolean,
+      default() { return false; }
+    },
+    rating: {
+      type: Number,
+      default() { return 0; }
+    }
+  },
   data() {
     return {
-      rating: 0,
-      stars: [ 1, 2, 3, 4, 5 ],
-      disabled: false
+      stars: [ 1, 2, 3, 4, 5 ]
     };
   },
   methods: {
