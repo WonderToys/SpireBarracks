@@ -32,3 +32,4 @@ autopublish
 accounts-google
 accounts-facebook
 service-configuration
+force-ssl
