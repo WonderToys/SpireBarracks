@@ -51,7 +51,7 @@ div.app-navigation
 <!--
   Style
 -->
-<style lang="less" scoped>
+<style lang="less">
 #allianceNameModal {
   width: 30%;
 
@@ -76,6 +76,16 @@ div.app-navigation
     }
   }
 }
+
+#toast-container {
+  max-width: 25%;
+  cursor: pointer;
+
+  a {
+    color: white !important;
+    text-decoration: underline;
+  }
+}
 </style>
 
 <!--
@@ -83,6 +93,8 @@ div.app-navigation
 -->
 <script>
 import { Meteor } from 'meteor/meteor';
+
+let toast = null;
 
 export default {
   data() {
@@ -153,6 +165,33 @@ export default {
         belowOrigin: true,
       });
     }, 500);
+
+    const shownToast = localStorage.getItem('shownToast');
+    if ( shownToast === 'true' ) return;
+
+    const $toastContent = $(`
+      <div style="word-break: break-word;">
+        <span style="font-weight: bold">Hey Guys!</span> The first pass of hero ratings has been released. It's not perfect, and it may be 
+        a little buggy, but it's a start! Try it out and let me know on <a href="http://discord.gg/NNpJvvk" target="_blank">Discord</a> 
+        if you find any problems! Enjoy!
+      </div>
+    `).on('click', () => {
+      $('.alert-toast').animate({
+          marginTop: '-40px',
+          opacity: '0'
+        },
+        {
+          duration: 375,
+          easing: 'easeOutExpo',
+          queue: false,
+          complete() {
+            $('#tooltip-container').remove();
+          }
+        });
+    });
+
+    Materialize.toast($toastContent, 60000, 'orange darken-2 alert-toast');
+    localStorage.setItem('shownToast', true);
   },
   updated() {
     $('.dropdown-button').dropdown({

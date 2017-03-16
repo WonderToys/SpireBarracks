@@ -1,0 +1,1 @@
+export const HeroRatings = new Mongo.Collection('hero_ratings');
