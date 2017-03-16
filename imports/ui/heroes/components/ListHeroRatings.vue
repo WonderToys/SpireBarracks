@@ -8,7 +8,7 @@ div.col.s10
       h5 {{ cat }}
       div.valign-wrapper.rating-container(v-for="(title, key) in items")
         span.label.valign {{ title }}
-        star-rating(:disabled="user == null", :value="ratings[key]", :show-remove="userRatings == null || userRatings.ratings[key] > 0", 
+        star-rating(:disabled="user == null", :value="ratings[key]", :show-remove="userRatings.ratings[key] > 0", 
                     @change="starChanged(key, $event)")
 
     div.col.s4
@@ -68,7 +68,7 @@ export default {
   props: [ 'hero' ],
   data() {
     return { 
-      userRatings: {},
+      userRatings: { ratings: {} },
       ratings: {},
       ratingConfig: {}
     };
@@ -95,7 +95,8 @@ export default {
     },
     _updateRatings() {
       this.ratings = {};
-      if ( this.user == null || this.hero == null ) {
+      this.userRatings = { ratings: {} };
+      if ( this.hero == null ) {
         return;
       }
 
@@ -103,7 +104,7 @@ export default {
         this.ratings = mapRatings(item => ratings.find(r => r._id === item));
       });
 
-      this._updateUserRatings();
+      if ( this.user != null ) this._updateUserRatings();
     },
     starChanged(key, rating) {
       this.userRatings.ratings[key] = rating;
