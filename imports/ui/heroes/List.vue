@@ -7,7 +7,7 @@ div.heroes
   div#searchBar
     nav.z-depth-0.white.pin-top(data-target="searchBar")
       div.nav-wrapper
-        form(onsubmit="null")&attributes({ 'v-on:submit.prevent': '' })
+        form&attributes({ 'v-on:submit.prevent': '' })
          div.row
           div.col.m12.l10
             div.input-field

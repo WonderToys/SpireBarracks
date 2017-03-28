@@ -51,6 +51,11 @@ div
           span.small.grey-text.darken-2 {{ getHeroSkills(hero)[0].coolString }}
 
         p {{ getHeroSkills(hero)[0].description }}
+        p.small.grey-text.darken-2(v-if="getHeroSkills(hero)[0].primaryScale != null && getHeroSkills(hero)[0].primaryScale.stat != null")
+          strong Scaling:&nbsp;
+          | {{ getHeroSkills(hero)[0].primaryScale.stat }} &times; {{ getHeroSkills(hero)[0].primaryScale.scale }}
+          span(v-if="getHeroSkills(hero)[0].secondaryScale != null && getHeroSkills(hero)[0].secondaryScale.stat != null")
+            | , {{ getHeroSkills(hero)[0].secondaryScale.stat }} &times; {{ getHeroSkills(hero)[0].secondaryScale.scale }}
       div.col.s6(v-if="getHeroSkills(hero)[1] != null")
         h6(:class="{ 'tooltipped': getHeroSkills(hero)[1].upgrades.length > 0 }", 
            :data-tooltip="getTooltip(hero, 1)", data-position="right")
@@ -58,6 +63,12 @@ div
           span.small.grey-text.darken-2 {{ getHeroSkills(hero)[1].coolString }}
 
         p {{ getHeroSkills(hero)[1].description }}
+        p.small.grey-text.darken-2(v-if="getHeroSkills(hero)[1].primaryScale != null && getHeroSkills(hero)[1].primaryScale.stat != null")
+          strong Scaling:&nbsp;
+          | {{ getHeroSkills(hero)[1].primaryScale.stat }} &times; {{ getHeroSkills(hero)[1].primaryScale.scale }}
+          span(v-if="getHeroSkills(hero)[1].secondaryScale != null && getHeroSkills(hero)[1].secondaryScale.stat != null")
+            | , {{ getHeroSkills(hero)[1].secondaryScale.stat }} &times; {{ getHeroSkills(hero)[1].secondaryScale.scale }}
+
     div.row.hero-skills(v-if="getHeroSkills(hero).length > 2")
       div.col.s6(v-if="getHeroSkills(hero)[2] != null")
         h6(:class="{ 'tooltipped': getHeroSkills(hero)[2].upgrades.length > 0 }", 
@@ -66,6 +77,12 @@ div
           span.small.grey-text.darken-2 {{ getHeroSkills(hero)[2].coolString }}
 
         p {{ getHeroSkills(hero)[2].description }}
+        p.small.grey-text.darken-2(v-if="getHeroSkills(hero)[2].primaryScale != null && getHeroSkills(hero)[2].primaryScale.stat != null")
+          strong Scaling:&nbsp;
+          | {{ getHeroSkills(hero)[2].primaryScale.stat }} &times; {{ getHeroSkills(hero)[2].primaryScale.scale }}
+          span(v-if="getHeroSkills(hero)[2].secondaryScale != null && getHeroSkills(hero)[2].secondaryScale.stat != null")
+            | , {{ getHeroSkills(hero)[2].secondaryScale.stat }} &times; {{ getHeroSkills(hero)[2].secondaryScale.scale }}
+
       div.col.s6(v-if="getHeroSkills(hero)[3] != null")
         h6(:class="{ 'tooltipped': getHeroSkills(hero)[3].upgrades.length > 0 }", 
            :data-tooltip="getTooltip(hero, 3)", data-position="right")
@@ -73,6 +90,11 @@ div
           span.small.grey-text.darken-2 {{ getHeroSkills(hero)[3].coolString }}
 
         p {{ getHeroSkills(hero)[3].description }}
+        p.small.grey-text.darken-2(v-if="getHeroSkills(hero)[3].primaryScale != null && getHeroSkills(hero)[3].primaryScale.stat != null")
+          strong Scaling:&nbsp;
+          | {{ getHeroSkills(hero)[3].primaryScale.stat }} &times; {{ getHeroSkills(hero)[3].primaryScale.scale }}
+          span(v-if="getHeroSkills(hero)[3].secondaryScale != null && getHeroSkills(hero)[3].secondaryScale.stat != null")
+            | , {{ getHeroSkills(hero)[3].secondaryScale.stat }} &times; {{ getHeroSkills(hero)[3].secondaryScale.scale }}
 </template>
 
 <!--
@@ -97,6 +119,12 @@ div
 .hero-skills {
   p {
     margin-top: 0;
+    margin-bottom: 0.25rem;
+
+    &.small {
+      margin: 0;
+      font-size: 0.85rem;
+    }
   }
 
   h6 {
@@ -119,6 +147,10 @@ div
       color: #5e35b1;
       cursor: pointer;
     }
+  }
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 </style>
