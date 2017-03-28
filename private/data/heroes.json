@@ -10697,6 +10697,7 @@
             "scale": 0.23
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.26
           },
           "numHits": 1
@@ -10758,6 +10759,7 @@
             "scale": 0.23
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.26
           },
           "numHits": 1
@@ -10885,6 +10887,7 @@
             "scale": 0.26
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.29
           },
           "numHits": 1
@@ -10946,6 +10949,7 @@
             "scale": 0.26
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.29
           },
           "numHits": 1
@@ -11251,6 +11255,7 @@
             "scale": 0.23
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.26
           },
           "numHits": 1
@@ -11312,6 +11317,7 @@
             "scale": 0.23
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.26
           },
           "numHits": 1
@@ -11439,6 +11445,7 @@
             "scale": 0.26
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.29
           },
           "numHits": 1
@@ -11500,6 +11507,7 @@
             "scale": 0.26
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.29
           },
           "numHits": 1
@@ -12428,6 +12436,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -12472,6 +12481,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -12589,6 +12599,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -12632,6 +12643,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -12746,6 +12758,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -12785,6 +12798,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -12822,6 +12836,7 @@
             "scale": 0.44
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.48
           },
           "numHits": 1
@@ -12901,6 +12916,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -12951,6 +12967,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -13071,6 +13088,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -13116,6 +13134,7 @@
             "scale": 0.2
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.2
           },
           "numHits": 1
@@ -28913,6 +28932,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -28975,6 +28995,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -29103,6 +29124,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.05
           },
           "numHits": 1
@@ -29165,6 +29187,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -32637,6 +32660,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -32694,6 +32718,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -32823,6 +32848,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -32886,6 +32912,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -33015,6 +33042,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -33078,6 +33106,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -33207,6 +33236,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1
@@ -33270,6 +33300,7 @@
             "scale": 1.15
           },
           "secondaryScale": {
+            "stat": "HP",
             "scale": 0.15
           },
           "numHits": 1

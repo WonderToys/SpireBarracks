@@ -133,7 +133,8 @@ nav {
 } //- card
 
 #heroModal {
-  height: 45%;
+  max-height: 50%;
+  height: 50%;
   overflow-x: hidden;
 
   h4, h6, span {
@@ -253,9 +254,33 @@ export default {
       showAscended: false,
       showRatings: false,
       searchText: '',
+      initialHero: null,
+      heroes: [],
     };
   },
+  watch: {
+    heroes(newValue) {
+      if ( (newValue != null && newValue.length > 0) && (this.initialHero != null) ) {
+        const heroName = this.unsanitizeName(this.initialHero);
+        this.initialHero = null;
+
+        newValue.forEach((hero, index) => {
+          if ( hero.name.toLowerCase() === heroName.toLowerCase() ) {
+            this.setSelectedHero(hero, index);
+            $('#heroModal').modal('open');
+            return;
+          }
+        });
+      }
+    }
+  },
   methods: {
+    sanitizeName(heroName) {
+      return heroName.replace(/\s/gi, '_');
+    },
+    unsanitizeName(heroName) {
+      return heroName.replace(/_/gi, ' ');
+    },
     searchButtonTitle() {
       if ( this.showAscended == true ) return 'Show Base';
 
@@ -296,14 +321,18 @@ export default {
     setSelectedHero(hero, index) {
       this.selectedHero = hero;
       this.selectedIndex = index;
+
+      this.$router.replace({
+        query: {
+          hero: this.sanitizeName(hero.name)
+        }
+      });
     },
     previousHero() {
-      this.selectedIndex--;
-      this.selectedHero = this.heroes[this.selectedIndex];
+      this.setSelectedHero(this.heroes[this.selectedIndex - 1], this.selectedIndex - 1)
     },
     nextHero() {
-      this.selectedIndex++;
-      this.selectedHero = this.heroes[this.selectedIndex];
+      this.setSelectedHero(this.heroes[this.selectedIndex + 1], this.selectedIndex + 1)
     }
   },
   meteor: {
@@ -343,15 +372,20 @@ export default {
     const $pinTarget = $('#searchBar');
     $('#searchBar nav').pushpin({
       top: $pinTarget.offset().top,
-      
     });
 
     $('.modal').modal({
       complete() {
         that.selectedHero = null;
         that.showRatings = false;
+
+        that.$router.replace({
+          query: {}
+        });
       }
     });
+
+    this.initialHero = this.$route.query.hero;
   }
 };
 </script>
